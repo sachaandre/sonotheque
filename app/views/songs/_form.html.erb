@@ -17,23 +17,13 @@
   </div>
 
   <div>
-    <%= form.label :filename, style: "display: block" %>
-    <%= form.text_field :filename %>
-  </div>
-
-  <div>
-    <%= form.label :duration_seconds, style: "display: block" %>
-    <%= form.number_field :duration_seconds %>
+    <%= form.label :audio_file, "Fichier Audio", style: "display: block" %>
+    <%= form.file_field :audio_file, accept: "audio/mp3, audio/mpeg, audio/wav"%>
   </div>
 
   <div>
     <%= form.label :year, style: "display: block" %>
     <%= form.number_field :year %>
-  </div>
-
-  <div>
-    <%= form.label :play_count, style: "display: block" %>
-    <%= form.number_field :play_count %>
   </div>
 
   <div>

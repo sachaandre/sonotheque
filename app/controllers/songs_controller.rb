@@ -23,6 +23,8 @@ class SongsController < ApplicationController
   def create
     @song = Song.new(song_params)
 
+    
+
     respond_to do |format|
       if @song.save
         format.html { redirect_to @song, notice: "Song was successfully created." }
@@ -65,6 +67,6 @@ class SongsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def song_params
-      params.expect(song: [ :title, :filename, :duration_seconds, :year, :play_count, :notes ])
+      params.expect(song: [ :title, :filename, :duration_seconds, :year, :play_count, :notes, :audio_file ])
     end
 end

@@ -5,8 +5,15 @@
   </p>
 
   <p>
-    <strong>Filename:</strong>
-    <%= song.filename %>
+    <strong>Ecouter le morceau :</strong>
+    <audio controls>
+      <source src="<%= url_for(@song.audio_file) %>" type="audio/mpeg">
+    </audio>
+  </p>
+
+  <p>
+    <strong> Nom du fichier :</strong>
+    <%= @song.audio_file.filename %>
   </p>
 
   <p>
