@@ -11,25 +11,67 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
-  </div>
+  <section>
+    <div>
+      <%= form.label :name, "Nom de l'album", style: "display: block" %>
+      <%= form.text_field :name %>
+    </div>
+    <div>
+      <%= form.label :year, "Année de publication", style: "display: block" %>
+      <%= form.number_field :year %>
+    </div>
+    <div>
+      <%= form.label :description, "Description interne", style: "display: block" %>
+      <%= form.textarea :description %>
+    </div>
+    <div>
+      <%= form.label :web_link, "Page de l'album (drame.org)", style: "display: block" %>
+      <%= form.text_field :web_link %>
+    </div>
+  </section>
 
-  <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.textarea :description %>
-  </div>
+<section data-controller="song-picker nested-form">
+  <h3>Pistes audio de l'album</h3>
 
-  <div>
-    <%= form.label :web_link, style: "display: block" %>
-    <%= form.text_field :web_link %>
+  <!-- Bouton + pour ouvrir la modale -->
+  <button type="button" data-action="click->song-picker#openModal">
+    + Ajouter une chanson
+  </button>
+  
+  <!-- Conteneur pour les lignes (tableau) -->
+  <div data-nested-form-target="container" data-controller="sortable">
+    <%= form.fields_for :album_songs do |album_song_form| %>
+      <%= render 'album_song_fields', form: album_song_form %>
+    <% end %>
   </div>
+  
+  <!-- Template caché -->
+  <template data-nested-form-target="template">
+    <%= form.fields_for :album_songs, AlbumSong.new, child_index: 'NEW_RECORD' do |album_song_form| %>
+      <%= render 'album_song_fields', form: album_song_form %>
+    <% end %>
+  </template>
 
-  <div>
-    <%= form.label :year, style: "display: block" %>
-    <%= form.number_field :year %>
+  <!-- MODALE -->
+  <div data-song-picker-target="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
+    <div style="background: white; margin: 50px auto; padding: 20px; max-width: 600px; max-height: 80vh; overflow: auto;">
+      <h3>Rechercher une chanson</h3>
+      
+      <input 
+        type="text" 
+        placeholder="Tapez pour rechercher..." 
+        data-song-picker-target="searchInput"
+        data-action="input->song-picker#search"
+      >
+      
+      <button type="button" data-action="click->song-picker#closeModal">Fermer</button>
+      
+      <div data-song-picker-target="results" style="margin-top: 20px;">
+        <!-- Résultats de recherche ici -->
+      </div>
+    </div>
   </div>
+</section>
 
   <div>
     <%= form.submit %>

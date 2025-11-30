@@ -3,8 +3,53 @@
 <%= render @album %>
 
 <div>
+  <h3>Chansons</h3>
+  <% if @album.songs.any? %>
+    <ul>
+      <% @album.album_songs.order(:track_number).each do |album_song| %>
+        <li>
+          - <%= album_song.track_number %> - <strong><%= album_song.song.title %></strong>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>Aucune chanson dans cet album</p>
+  <% end %>
+</div>
+
+<div>
   <%= link_to "Edit this album", edit_album_path(@album) %> |
   <%= link_to "Back to albums", albums_path %>
 
   <%= button_to "Destroy this album", @album, method: :delete %>
 </div>
+
+<div>
+  <h3>Exporter le player</h3>
+  <button onclick="copyIframeCode('album', <%= @album.id %>)">
+    📋 Copier le code iframe
+  </button>
+  <pre id="iframe-code-album" style="background: #f5f5f5; padding: 10px; display: none;"></pre>
+</div>
+
+<script>
+function copyIframeCode(type, id) {
+  const baseUrl = '<%= request.base_url %>';
+  let iframeCode;
+  
+  if (type === 'album') {
+    iframeCode = `<iframe src="${baseUrl}/embed/album/${id}" width="100%" height="400" frameborder="0"></iframe>`;
+  } else {
+    iframeCode = `<iframe src="${baseUrl}/embed/radio" width="100%" height="400" frameborder="0"></iframe>`;
+  }
+  
+  navigator.clipboard.writeText(iframeCode);
+  
+  const codeBlock = document.getElementById(`iframe-code-${type}`);
+  codeBlock.textContent = iframeCode;
+  codeBlock.style.display = 'block';
+  
+  alert('Code iframe copié dans le presse-papier !');
+}
+</script>
+

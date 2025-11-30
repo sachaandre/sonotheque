@@ -1,0 +1,20 @@
+<div data-controller="audio-player" 
+     data-audio-player-songs-value="<%= @songs.to_json(only: [:id, :title], methods: [:audio_url, :album_web_link]) %>"
+  
+  <h2>📻 Radio - Tous les sons en aléatoire</h2>
+  
+  <div id="current-track">
+    <h3>
+        <a href="#" data-audio-player-target="trackTitle" target="_blank">-</a>
+    </h3>
+  </div>
+  
+  <audio controls data-audio-player-target="audio" data-action="ended->audio-player#next">
+    <source src="" type="audio/mpeg">
+  </audio>
+  
+  <div>
+    <button data-action="click->audio-player#previous">⏮ Précédent</button>
+    <button data-action="click->audio-player#next">Suivant ⏭</button>
+  </div>
+</div>

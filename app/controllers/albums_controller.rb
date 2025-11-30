@@ -17,6 +17,7 @@ class AlbumsController < ApplicationController
 
   # GET /albums/1/edit
   def edit
+      @album.album_songs.build if @album.album_songs.empty?
   end
 
   # POST /albums or /albums.json
@@ -65,6 +66,9 @@ class AlbumsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def album_params
-      params.expect(album: [ :name, :description, :web_link, :year ])
+      params.require(:album).permit(
+        :name, :description, :web_link, :year,
+        album_songs_attributes: [:id, :song_id, :track_number, :_destroy]
+      )
     end
 end

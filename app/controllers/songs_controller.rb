@@ -3,7 +3,7 @@ class SongsController < ApplicationController
 
   # GET /songs or /songs.json
   def index
-    @songs = Song.all
+    @songs = Song.order(:title).page(params[:page]).per(50)
   end
 
   # GET /songs/1 or /songs/1.json
@@ -58,6 +58,20 @@ class SongsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def search
+  query = params[:q].to_s.strip
+  
+    if query.present?
+      @songs = Song.where("title ILIKE ?", "%#{query}%")
+                  .order(:title)
+                  .limit(20)
+    else
+      @songs = Song.order(:title).limit(20)
+    end
+  
+  render json: @songs.as_json(only: [:id, :title])
+end
 
   private
     # Use callbacks to share common setup or constraints between actions.

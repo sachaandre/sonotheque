@@ -2,15 +2,21 @@
 
 <% content_for :title, "Songs" %>
 
-<h1>Songs</h1>
+<h1>MP3 individuels</h1>
 
+<%= link_to "Ajouter un MP3", new_song_path %>
+
+
+<% if @songs.count > 0 %>
 <div id="songs">
   <% @songs.each do |song| %>
-    <%= render song %>
     <p>
-      <%= link_to "Show this song", song %>
+      <%= song.title %> 
+      <%= link_to "Montrer cette piste audio", song %>
     </p>
   <% end %>
 </div>
+<% end %>
 
-<%= link_to "New song", new_song_path %>
+<%= paginate @songs %>
+

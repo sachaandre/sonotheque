@@ -1,0 +1,26 @@
+<div data-controller="audio-player" 
+     data-audio-player-songs-value="<%= @songs.to_json(only: [:id, :title], methods: [:audio_url]) %>">
+  
+  <h2><%= @album.name %></h2>
+  
+  <div id="current-track">
+    <h3 data-audio-player-target="trackTitle">-</h3>
+  </div>
+  
+  <audio controls data-audio-player-target="audio" data-action="ended->audio-player#next">
+    <source src="" type="audio/mpeg">
+  </audio>
+  
+  <div>
+    <button data-action="click->audio-player#previous">⏮ Précédent</button>
+    <button data-action="click->audio-player#next">Suivant ⏭</button>
+  </div>
+  
+  <ol data-audio-player-target="playlist">
+    <% @songs.each_with_index do |song, index| %>
+      <li data-action="click->audio-player#playSong" data-index="<%= index %>">
+        <%= song.title %>
+      </li>
+    <% end %>
+  </ol>
+</div>
