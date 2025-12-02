@@ -1,4 +1,6 @@
 class AdminController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: [:sync_songs]
+  
   def sync_songs
     songs_data = JSON.parse(params[:songs_json])
     
