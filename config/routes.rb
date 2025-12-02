@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   get 'embed/album/:id', to: 'player#album_embed', as: 'embed_album'
   get 'embed/radio', to: 'player#radio_embed', as: 'embed_radio'
 
+  post 'admin/sync_songs', to: 'admin#sync_songs'
+
   root "songs#index"
  
   resources :albums

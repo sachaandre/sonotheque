@@ -1,10 +1,11 @@
 namespace :songs do
-  desc "Import MP3 files from a directory"
-  task :import, [:directory] => :environment do |t, args|
+  desc "Import MP3 files from a directory with size limit"
+  task :import, [:directory, :max_size_mb] => :environment do |t, args|
     directory = args[:directory]
+    max_size = (args[:max_size_mb] || 750).to_i * 1024 * 1024 # Converti en bytes
     
     unless directory && Dir.exist?(directory)
-      puts "Usage: rake songs:import[/path/to/mp3s]"
+      puts "Usage: rake songs:import[/path/to/mp3s,750]"
       exit
     end
     
@@ -12,19 +13,29 @@ namespace :songs do
     total = mp3_files.count
     
     puts "Found #{total} MP3 files"
+    puts "Max size: #{max_size / 1024 / 1024}MB"
     puts "Starting import..."
     
     imported = 0
     errors = 0
+    total_size = 0
     
     mp3_files.each_with_index do |file_path, index|
+      file_size = File.size(file_path)
+      
+      # Vérifie si on dépasse la limite
+      if total_size + file_size > max_size
+        puts "\n⚠️  Size limit reached! (#{total_size / 1024 / 1024}MB)"
+        puts "Imported #{imported} files before hitting limit"
+        break
+      end
+      
       begin
         filename = File.basename(file_path)
-        title = File.basename(file_path, ".mp3").titleize
+        title = File.basename(file_path, ".mp3").gsub(/[-_]/, ' ').titleize
         
-        # Vérifie si le fichier existe déjà
         if Song.exists?(filename: filename)
-          puts "[#{index + 1}/#{total}] ⏭️  Skipped: #{filename} (already exists)"
+          puts "[#{index + 1}/#{total}] ⏭️  Skipped: #{filename}"
           next
         end
         
@@ -34,10 +45,11 @@ namespace :songs do
           filename: filename,
           content_type: 'audio/mpeg'
         )
-        
+
         if song.save
+          total_size += file_size
           imported += 1
-          puts "[#{index + 1}/#{total}] ✅ Imported: #{title}"
+          puts "[#{index + 1}/#{total}] ✅ #{title} (#{file_size / 1024 / 1024}MB) - Total: #{total_size / 1024 / 1024}MB"
         else
           errors += 1
           puts "[#{index + 1}/#{total}] ❌ Error: #{song.errors.full_messages.join(', ')}"
@@ -50,8 +62,8 @@ namespace :songs do
     end
     
     puts "\n=== Import Complete ==="
-    puts "✅ Imported: #{imported}"
+    puts "✅ Imported: #{imported} files"
+    puts "📊 Total size: #{total_size / 1024 / 1024}MB"
     puts "❌ Errors: #{errors}"
-    puts "⏭️  Skipped: #{total - imported - errors}"
   end
 end
