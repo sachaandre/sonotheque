@@ -8,8 +8,9 @@ Rails.application.routes.draw do
   get 'embed/radio', to: 'player#radio_embed', as: 'embed_radio'
 
   post 'admin/sync_songs', to: 'admin#sync_songs'
-
+  post 'admin/reset_songs', to: 'admin#reset_songs'
   root "songs#index"
+
  
   resources :albums
   resources :songs do

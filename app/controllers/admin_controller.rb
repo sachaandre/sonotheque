@@ -1,5 +1,11 @@
 class AdminController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:sync_songs]
+
+  # Dans admin_controller.rb
+    def reset_songs
+    Song.destroy_all
+    render json: { success: true, message: "All songs deleted" }
+    end
   
   def sync_songs
     songs_data = JSON.parse(params[:songs_json])
