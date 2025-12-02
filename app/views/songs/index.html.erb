@@ -1,22 +1,39 @@
 <p style="color: green"><%= notice %></p>
 
-<% content_for :title, "Songs" %>
+<div class="bg-white rounded-lg shadow-lg p-8">
+  <div class="w-full flex justify-between items-center mb-8 gap-4">
+    <h1 class="text-3xl font-bold text-purple-800">MP3 individuels</h1>
+      <%= link_to "Ajouter un MP3", new_song_path, class: "justify-self-end bg-purple-600 hover:bg-purple-700 text-white font-medium px-6 py-3 rounded-lg transition" %>
+  </div>
 
-<h1>MP3 individuels</h1>
+  <% if @songs.any? %>
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead class="bg-purple-50 border-b-2 border-purple-200">
+          <tr>
+            <th class="px-6 py-3 text-left text-sm font-semibold text-purple-800">Titre</th>
+            <th class="px-6 py-3 text-left text-sm font-semibold text-purple-800">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          <% @songs.each do |song| %>
+            <tr class="hover:bg-purple-50 transition">
+              <td class="px-6 py-4">
+                <%= link_to song.title, song, class: "text-purple-600 hover:text-purple-800 font-medium" %>
+              </td>
+              <td class="px-6 py-4">
+                <%= link_to "Voir", song, class: "text-purple-600 hover:text-purple-800 text-sm" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
 
-<%= link_to "Ajouter un MP3", new_song_path %>
-
-
-<% if @songs.count > 0 %>
-<div id="songs">
-  <% @songs.each do |song| %>
-    <p>
-      <%= song.title %> 
-      <%= link_to "Montrer cette piste audio", song %>
-    </p>
+    <div class="mt-6 flex justify-center">
+      <%= paginate @songs%>
+    </div>
+  <% else %>
+    <p class="text-gray-600">Aucune chanson</p>
   <% end %>
 </div>
-<% end %>
-
-<%= paginate @songs %>
-

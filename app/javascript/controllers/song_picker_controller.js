@@ -5,10 +5,10 @@ export default class extends Controller {
   
   openModal(event) {
     event.preventDefault()
-    this.modalTarget.style.display = "block"
+    this.modalTarget.style.display = "flex"  // Pas hidden/block, mais flex!
     this.searchInputTarget.focus()
   }
-  
+
   closeModal() {
     this.modalTarget.style.display = "none"
     this.searchInputTarget.value = ""
@@ -20,11 +20,14 @@ export default class extends Controller {
     const response = await fetch(`/songs/search?q=${encodeURIComponent(query)}`)
     const songs = await response.json()
     
-    this.resultsTarget.innerHTML = songs.map(song => `
-      <div class="song-result" data-song-id="${song.id}" data-song-title="${song.title}" data-action="click->song-picker#selectSong">
-        ${song.title}
-      </div>
-    `).join('')
+this.resultsTarget.innerHTML = songs.map(song => `
+  <div class="song-result p-3 hover:bg-purple-50 rounded-lg cursor-pointer transition border border-gray-200" 
+       data-song-id="${song.id}" 
+       data-song-title="${song.title}" 
+       data-action="click->song-picker#selectSong">
+    ${song.title}
+  </div>
+`).join('')
   }
   
   selectSong(event) {

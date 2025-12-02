@@ -1,4 +1,4 @@
-<div class="nested-fields" 
+<div class="nested-fields bg-gray-50 hover:bg-gray-100 transition" 
      draggable="true"
      data-sortable-target="item"
      data-song-title="<%= form.object.song&.title %>"
@@ -7,9 +7,11 @@
   <%= form.hidden_field :_destroy %>
   <%= form.hidden_field :song_id %>
   
-  <div style="display: flex; align-items: center; gap: 10px; padding: 10px; border: 1px solid #ccc; margin-bottom: 5px; cursor: move;">
+  <div class="flex items-center gap-4 p-4 border border-gray-200 rounded-lg cursor-move">
     
-    <span style="font-weight: bold;" data-song-title-display>
+    <span class="text-gray-400">☰</span>
+    
+    <span class="font-medium text-purple-800 flex-1" data-song-title-display>
       <%= form.object.song&.title || "Nouvelle chanson" %>
     </span>
     
@@ -17,12 +19,12 @@
            name="<%= form.object_name %>[track_number]" 
            value="<%= form.object.track_number %>" 
            readonly 
-           style="width: 60px;">
+           class="w-16 px-2 py-1 bg-white border border-gray-300 rounded text-center">
     
     <button type="button" 
             data-action="click->nested-form#remove"
-            style="margin-left: auto;">
-      ❌
+            class="text-red-600 hover:text-red-800 transition">
+      ✕
     </button>
   </div>
 </div>

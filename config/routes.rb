@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   # Routes embed (iframe)
   get 'embed/album/:id', to: 'player#album_embed', as: 'embed_album'
   get 'embed/radio', to: 'player#radio_embed', as: 'embed_radio'
+
+  root "songs#index"
  
   resources :albums
   resources :songs do

@@ -8,3 +8,58 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+/* Styles de base pour tous les navigateurs */
+
+audio {
+  width: 100%;
+  height: 54px;
+  border-radius: 0.5rem;
+  outline: none;
+}
+
+/* Chrome, Safari, Edge */
+audio::-webkit-media-controls-panel {
+  background-color: #f3e8ff; /* purple-50 */
+}
+
+audio::-webkit-media-controls-play-button {
+  background-color: #6b21a8; /* purple-800 */
+  border-radius: 50%;
+}
+
+/* Firefox */
+audio::-moz-range-thumb {
+  background-color: #6b21a8; /* purple-800 */
+}
+
+audio::-moz-range-track {
+  background-color: #f3e8ff; /* purple-50 */
+}
+
+audio::-moz-range-progress {
+  background-color: #9333ea; /* purple-600 */
+}
+
+/********/
+.pagination a,
+.pagination span {
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  color: #1f2937;
+  transition: all 0.2s;
+}
+
+.pagination a:hover {
+  background-color: #f3e8ff;
+}
+
+.pagination .current {
+  background-color: #1f2937;
+  color: white;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.pagination .gap {
+  color: #9ca3af;
+}

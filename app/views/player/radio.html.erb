@@ -1,20 +1,40 @@
-<div data-controller="audio-player" 
-     data-audio-player-songs-value="<%= @songs.to_json(only: [:id, :title], methods: [:audio_url, :album_web_link]) %>"
+<div class="max-w-4xl mx-auto" 
+     data-controller="audio-player" 
+     data-audio-player-songs-value="<%= @songs.to_json(only: [:id, :title], methods: [:audio_url, :album_web_link]) %>">
   
-  <h2>📻 Radio - Tous les sons en aléatoire</h2>
-  
-  <div id="current-track">
-    <h3>
-        <a href="#" data-audio-player-target="trackTitle" target="_blank">-</a>
-    </h3>
-  </div>
-  
-  <audio controls data-audio-player-target="audio" data-action="ended->audio-player#next">
-    <source src="" type="audio/mpeg">
-  </audio>
-  
-  <div>
-    <button data-action="click->audio-player#previous">⏮ Précédent</button>
-    <button data-action="click->audio-player#next">Suivant ⏭</button>
+  <div class="bg-white rounded-lg shadow-lg p-8">
+    <h1 class="text-3xl font-bold text-purple-800 mb-6">📻 Radio Drame</h1>
+    <p class="text-gray-600 mb-8">Tous les sons présents sur ce site, en aléatoire</p>
+    <p class="text-gray-600 mb-8">Plus de 202 heures de musique. (9 jours 24h/24 !)</p>
+    
+    <!-- Morceau en cours -->
+    <div class="bg-purple-50 rounded-lg p-6 mb-6">
+      <p class="text-sm text-purple-600 font-medium mb-2">En cours de lecture</p>
+      <h2 class="text-2xl font-bold text-purple-900">
+        <a href="#" data-audio-player-target="trackTitle" target="_blank" class="hover:text-purple-600">
+          -
+        </a>
+      </h2>
+    </div>
+    
+    <!-- Player audio -->
+    <audio controls 
+           class="w-full mb-6" 
+           data-audio-player-target="audio" 
+           data-action="ended->audio-player#next">
+      <source src="" type="audio/mpeg">
+    </audio>
+    
+    <!-- Contrôles -->
+    <div class="flex gap-4 justify-center">
+      <button data-action="click->audio-player#previous" 
+              class="bg-purple-600 hover:bg-purple-700 text-white font-medium px-6 py-3 rounded-lg transition">
+        ⏮ Précédent
+      </button>
+      <button data-action="click->audio-player#next" 
+              class="bg-purple-600 hover:bg-purple-700 text-white font-medium px-6 py-3 rounded-lg transition">
+        Suivant ⏭
+      </button>
+    </div>
   </div>
 </div>

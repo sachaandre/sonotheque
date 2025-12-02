@@ -1,9 +1,10 @@
-<%= form_with(model: album) do |form| %>
+<%= form_with(model: album, class: "space-y-8") do |form| %>
   <% if album.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(album.errors.count, "error") %> prohibited this album from being saved:</h2>
-
-      <ul>
+    <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+      <h2 class="text-red-800 font-semibold mb-2">
+        <%= pluralize(album.errors.count, "error") %> prohibited this album from being saved:
+      </h2>
+      <ul class="list-disc list-inside text-red-700">
         <% album.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
@@ -11,69 +12,80 @@
     </div>
   <% end %>
 
-  <section>
+  <!-- Infos de base -->
+  <div class="bg-white rounded-lg shadow p-6 space-y-4">
+    <h3 class="text-lg font-semibold text-purple-800 mb-4">Informations de l'album</h3>
+    
     <div>
-      <%= form.label :name, "Nom de l'album", style: "display: block" %>
-      <%= form.text_field :name %>
+      <%= form.label :name, "Nom de l'album", class: "block text-sm font-medium text-gray-700 mb-2" %>
+      <%= form.text_field :name, class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500" %>
     </div>
+    
     <div>
-      <%= form.label :year, "Année de publication", style: "display: block" %>
-      <%= form.number_field :year %>
+      <%= form.label :year, "Année de publication", class: "block text-sm font-medium text-gray-700 mb-2" %>
+      <%= form.number_field :year, class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500" %>
     </div>
+    
     <div>
-      <%= form.label :description, "Description interne", style: "display: block" %>
-      <%= form.textarea :description %>
+      <%= form.label :description, "Description interne", class: "block text-sm font-medium text-gray-700 mb-2" %>
+      <%= form.text_area :description, rows: 3, class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500" %>
     </div>
+    
     <div>
-      <%= form.label :web_link, "Page de l'album (drame.org)", style: "display: block" %>
-      <%= form.text_field :web_link %>
+      <%= form.label :web_link, "Page de l'album (drame.org)", class: "block text-sm font-medium text-gray-700 mb-2" %>
+      <%= form.text_field :web_link, class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500" %>
     </div>
-  </section>
-
-<section data-controller="song-picker nested-form">
-  <h3>Pistes audio de l'album</h3>
-
-  <!-- Bouton + pour ouvrir la modale -->
-  <button type="button" data-action="click->song-picker#openModal">
-    + Ajouter une chanson
-  </button>
-  
-  <!-- Conteneur pour les lignes (tableau) -->
-  <div data-nested-form-target="container" data-controller="sortable">
-    <%= form.fields_for :album_songs do |album_song_form| %>
-      <%= render 'album_song_fields', form: album_song_form %>
-    <% end %>
   </div>
-  
-  <!-- Template caché -->
-  <template data-nested-form-target="template">
-    <%= form.fields_for :album_songs, AlbumSong.new, child_index: 'NEW_RECORD' do |album_song_form| %>
-      <%= render 'album_song_fields', form: album_song_form %>
-    <% end %>
-  </template>
 
-  <!-- MODALE -->
-  <div data-song-picker-target="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
-    <div style="background: white; margin: 50px auto; padding: 20px; max-width: 600px; max-height: 80vh; overflow: auto;">
-      <h3>Rechercher une chanson</h3>
-      
-      <input 
-        type="text" 
-        placeholder="Tapez pour rechercher..." 
-        data-song-picker-target="searchInput"
-        data-action="input->song-picker#search"
-      >
-      
-      <button type="button" data-action="click->song-picker#closeModal">Fermer</button>
-      
-      <div data-song-picker-target="results" style="margin-top: 20px;">
-        <!-- Résultats de recherche ici -->
+  <!-- Pistes audio -->
+  <div class="bg-white rounded-lg shadow p-6" data-controller="song-picker nested-form">
+    <h3 class="text-lg font-semibold text-purple-800 mb-4">Pistes audio de l'album</h3>
+
+    <button type="button" 
+            data-action="click->song-picker#openModal"
+            class="bg-purple-600 hover:bg-purple-700 text-white font-medium px-6 py-3 rounded-lg transition mb-6">
+      + Ajouter une chanson
+    </button>
+    
+    <div data-nested-form-target="container" data-controller="sortable" class="space-y-2">
+      <%= form.fields_for :album_songs do |album_song_form| %>
+        <%= render 'album_song_fields', form: album_song_form %>
+      <% end %>
+    </div>
+    
+    <template data-nested-form-target="template">
+      <%= form.fields_for :album_songs, AlbumSong.new, child_index: 'NEW_RECORD' do |album_song_form| %>
+        <%= render 'album_song_fields', form: album_song_form %>
+      <% end %>
+    </template>
+
+    <!-- MODALE -->
+    <div data-song-picker-target="modal" 
+     style="display: none;"
+     class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+      <div class="bg-white rounded-lg shadow-xl p-6 max-w-2xl w-full mx-4 max-h-[80vh] overflow-auto">
+        <h3 class="text-xl font-bold text-purple-800 mb-4">Rechercher une chanson</h3>
+        
+        <input type="text" 
+               placeholder="Tapez pour rechercher..." 
+               data-song-picker-target="searchInput"
+               data-action="input->song-picker#search"
+               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 mb-4">
+        
+        <button type="button" 
+                data-action="click->song-picker#closeModal"
+                class="mb-4 text-gray-600 hover:text-gray-800">
+          ✕ Fermer
+        </button>
+        
+        <div data-song-picker-target="results" class="space-y-2">
+          <!-- Résultats ici -->
+        </div>
       </div>
     </div>
   </div>
-</section>
 
   <div>
-    <%= form.submit %>
+    <%= form.submit "Sauvegarder", class: "bg-purple-600 hover:bg-purple-700 text-white font-medium px-6 py-3 rounded-lg transition cursor-pointer" %>
   </div>
 <% end %>
