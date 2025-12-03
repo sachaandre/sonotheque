@@ -11,7 +11,7 @@ proxy:
   host: jjbirge-sonotheque.sachaandre.com
 
 registry:
-  username: your-dockerhub-username
+  username: sachaandre
   password:
     - KAMAL_REGISTRY_PASSWORD
 
@@ -27,3 +27,6 @@ asset_path: /rails/public/assets
 
 builder:
   arch: amd64
+
+ssh:
+  user: debian
