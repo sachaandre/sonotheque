@@ -1,6 +1,6 @@
 service: sonotheque
 
-image: your-dockerhub-username/sonotheque
+image: sachaandre/sonotheque
 
 servers:
   web:
