@@ -16,14 +16,14 @@ registry:
     - KAMAL_REGISTRY_PASSWORD
 
 env:
+  secret:
+    - RAILS_MASTER_KEY
   clear:
     SOLID_QUEUE_IN_PUMA: true
     RAILS_LOG_LEVEL: info
 
 volumes:
   - "sonotheque_storage:/rails/storage"
-
-# asset_path: /rails/public/assets
 
 builder:
   arch: amd64
