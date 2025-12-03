@@ -43,7 +43,7 @@ RUN bundle install && \
 COPY . .
 
 # Make entrypoint executable
-RUN chmod +x /rails/bin/docker-entrypoint
+RUN chmod +x /rails/bin/*
 
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
