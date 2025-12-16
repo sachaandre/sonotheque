@@ -79,8 +79,27 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  <<: *default
-  database: sonotheque_production
-  username: sonotheque
-  password: <%= ENV['DATABASE_PASSWORD'] %>
-  host: localhost
+  primary:
+    <<: *default
+    database: sonotheque_production
+    username: sonotheque
+    password: <%= ENV['DATABASE_PASSWORD'] %>
+    host: localhost
+  cache:
+    <<: *default
+    database: sonotheque_production
+    username: sonotheque
+    password: <%= ENV['DATABASE_PASSWORD'] %>
+    host: localhost
+  queue:
+    <<: *default
+    database: sonotheque_production
+    username: sonotheque
+    password: <%= ENV['DATABASE_PASSWORD'] %>
+    host: localhost
+  cable:
+    <<: *default
+    database: sonotheque_production
+    username: sonotheque
+    password: <%= ENV['DATABASE_PASSWORD'] %>
+    host: localhost

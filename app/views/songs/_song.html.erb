@@ -4,17 +4,21 @@
     <%= song.title %>
   </p>
 
-  <p>
-    <strong>Ecouter le morceau :</strong>
-    <audio controls>
-      <source src="<%= url_for(@song.audio_file) %>" type="audio/mpeg">
-    </audio>
-  </p>
+  <% if song.audio_file.attached? %>
+    <p>
+      <strong>Ecouter le morceau :</strong>
+      <audio controls>
+        <source src="<%= url_for(song.audio_file) %>" type="audio/mpeg">
+      </audio>
+    </p>
 
-  <p>
-    <strong> Nom du fichier :</strong>
-    <%= @song.audio_file.filename %>
-  </p>
+    <p>
+      <strong>Nom du fichier :</strong>
+      <%= song.audio_file.filename %>
+    </p>
+  <% else %>
+    <p class="text-gray-500">Aucun fichier audio</p>
+  <% end %>
 
   <p>
     <strong>Duration seconds:</strong>
@@ -35,5 +39,4 @@
     <strong>Notes:</strong>
     <%= song.notes %>
   </p>
-
 </div>

@@ -5,7 +5,7 @@ class Song < ApplicationRecord
     has_many :albums, through: :album_songs
 
     # Validation : un fichier audio est obligatoire
-    validates :audio_file, presence: true
+    #validates :audio_file, presence: true
 
     def audio_url
         return nil unless audio_file.attached?

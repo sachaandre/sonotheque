@@ -1,14 +1,32 @@
-<div class="max-w-4xl mx-auto" 
+<div class="max-w-4xl" 
      data-controller="audio-player" 
      data-audio-player-songs-value="<%= @songs.to_json(only: [:id, :title], methods: [:audio_url, :album_web_link]) %>">
   
   <div class="bg-white rounded-lg shadow-lg p-8">
-    <h1 class="text-3xl font-bold text-purple-800 mb-6">📻 Radio Drame</h1>
-    <p class="text-gray-600 mb-8">Tous les sons présents sur ce site, en aléatoire</p>
-    <p class="text-gray-600 mb-8">Plus de 202 heures de musique. (9 jours 24h/24 !)</p>
+    <h1 class="text-3xl font-bold text-purple-800 mb-6 text-center">📻 Radio Drame</h1>
+    
+    <!-- Contrôles -->
+    <div class="flex gap-4 justify-center mb-3">
+      <button data-action="click->audio-player#previous"
+              class="bg-purple-600 hover:bg-purple-700 text-white font-medium px-6 py-3 rounded-lg transition">
+        ⏮ Morceau précédent
+      </button>
+      <button data-action="click->audio-player#next"
+              class="bg-purple-600 hover:bg-purple-700 text-white font-medium px-6 py-3 rounded-lg transition">
+        Morceau suivant ⏭
+      </button>
+    </div>    
+
+    <!-- Player audio -->
+    <audio controls
+           class="w-full mb-3"
+           data-audio-player-target="audio"
+           data-action="ended->audio-player#next">
+      <source src="" type="audio/mpeg">
+    </audio>
     
     <!-- Morceau en cours -->
-    <div class="bg-purple-50 rounded-lg p-6 mb-6">
+    <div class="bg-purple-50 rounded-lg p-6 mb-3">
       <p class="text-sm text-purple-600 font-medium mb-2">En cours de lecture</p>
       <h2 class="text-2xl font-bold text-purple-900">
         <a href="#" data-audio-player-target="trackTitle" target="_blank" class="hover:text-purple-600">
@@ -17,24 +35,5 @@
       </h2>
     </div>
     
-    <!-- Player audio -->
-    <audio controls 
-           class="w-full mb-6" 
-           data-audio-player-target="audio" 
-           data-action="ended->audio-player#next">
-      <source src="" type="audio/mpeg">
-    </audio>
-    
-    <!-- Contrôles -->
-    <div class="flex gap-4 justify-center">
-      <button data-action="click->audio-player#previous" 
-              class="bg-purple-600 hover:bg-purple-700 text-white font-medium px-6 py-3 rounded-lg transition">
-        ⏮ Précédent
-      </button>
-      <button data-action="click->audio-player#next" 
-              class="bg-purple-600 hover:bg-purple-700 text-white font-medium px-6 py-3 rounded-lg transition">
-        Suivant ⏭
-      </button>
-    </div>
   </div>
 </div>

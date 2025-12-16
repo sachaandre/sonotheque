@@ -8,7 +8,9 @@ Rails.application.routes.draw do
   get 'embed/radio', to: 'player#radio_embed', as: 'embed_radio'
 
   root "songs#index"
-
+  get 'login', to: 'sessions#new'
+  post 'login', to: 'sessions#create'
+  get 'logout', to: 'sessions#destroy'
  
   resources :albums
   resources :songs do
