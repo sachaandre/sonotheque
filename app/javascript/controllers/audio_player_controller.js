@@ -21,9 +21,11 @@ export default class extends Controller {
     this.audioTarget.load()
     
     // Highlight dans la playlist
-    this.playlistTarget.querySelectorAll('li').forEach((li, i) => {
-      li.style.fontWeight = i === index ? 'bold' : 'normal'
-    })
+    if (this.hasPlaylistTarget) {
+      this.playlistTarget.querySelectorAll('li').forEach((li, i) => {
+        li.style.fontWeight = i === index ? 'bold' : 'normal'
+      })
+    }
   }
   
   playSong(event) {
