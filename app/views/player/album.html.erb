@@ -3,13 +3,13 @@
      data-audio-player-songs-value="<%= @songs.to_json(only: [:id, :title], methods: [:audio_url]) %>">
   
   <div class="bg-white rounded-lg shadow-lg p-8">
-    <h1 class="text-3xl font-bold text-purple-800 mb-2"><%= @album.name %></h1>
+    <h1 class="text-3xl font-bold text-red-800 mb-2"><%= @album.name %></h1>
     <p class="text-gray-600 mb-8"><%= @album.year %></p>
     
     <!-- Morceau en cours -->
-    <div class="bg-purple-50 rounded-lg p-6 mb-6">
-      <p class="text-sm text-purple-600 font-medium mb-2">En cours de lecture</p>
-      <h2 class="text-2xl font-bold text-purple-900" data-audio-player-target="trackTitle">-</h2>
+    <div class="bg-red-50 rounded-lg p-6 mb-6">
+      <p class="text-sm text-red-600 font-medium mb-2">En cours de lecture</p>
+      <h2 class="text-2xl font-bold text-red-900" data-audio-player-target="trackTitle">-</h2>
     </div>
     
     <!-- Player -->
@@ -20,24 +20,24 @@
     <!-- Contrôles -->
     <div class="flex gap-4 justify-center mb-8">
       <button data-action="click->audio-player#previous" 
-              class="bg-purple-600 hover:bg-purple-700 text-white font-medium px-6 py-3 rounded-lg">
+              class="bg-red-600 hover:bg-red-700 text-white font-medium px-6 py-3 rounded-lg">
         ⏮ Précédent
       </button>
       <button data-action="click->audio-player#next" 
-              class="bg-purple-600 hover:bg-purple-700 text-white font-medium px-6 py-3 rounded-lg">
+              class="bg-red-600 hover:bg-red-700 text-white font-medium px-6 py-3 rounded-lg">
         Suivant ⏭
       </button>
     </div>
     
     <!-- Playlist -->
     <div class="border-t pt-6">
-      <h3 class="text-lg font-semibold text-purple-800 mb-4">Pistes</h3>
+      <h3 class="text-lg font-semibold text-red-800 mb-4">Pistes</h3>
       <ol class="space-y-2" data-audio-player-target="playlist">
         <% @songs.each_with_index do |song, index| %>
           <li data-action="click->audio-player#playSong" 
               data-index="<%= index %>"
-              class="p-3 hover:bg-purple-50 rounded cursor-pointer transition">
-            <span class="text-purple-600 font-medium"><%= index + 1 %>.</span>
+              class="p-3 hover:bg-red-50 rounded cursor-pointer transition">
+            <span class="text-red-600 font-medium"><%= index + 1 %>.</span>
             <%= song.title %>
           </li>
         <% end %>
