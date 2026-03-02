@@ -27,21 +27,20 @@ audio::-webkit-media-controls-panel {
 }
 
 audio::-webkit-media-controls-play-button {
-  background-color: #6b21a8; /* purple-800 */
-  border-radius: 50%;
+  background-color: oklch(44.4% .177 26.899) /* red-800 */
 }
 
 /* Firefox */
 audio::-moz-range-thumb {
-  background-color: #6b21a8; /* purple-800 */
+  background-color: oklch(44.4% .177 26.899) /* red-800 */
 }
 
 audio::-moz-range-track {
-  background-color: #f3e8ff; /* purple-50 */
+  background-color: oklch(97.1% .013 17.38) /* red-50 */
 }
 
 audio::-moz-range-progress {
-  background-color: #9333ea; /* purple-600 */
+  background-color: oklch(57.7% .245 27.325) /* red-600 */
 }
 
 /********/

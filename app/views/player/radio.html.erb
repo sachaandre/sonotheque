@@ -2,7 +2,7 @@
      data-controller="audio-player" 
      data-audio-player-songs-value="<%= @songs.to_json(only: [:id, :title], methods: [:audio_url, :album_web_link]) %>">
   
-  <div class="bg-white rounded-lg shadow-lg p-8">
+  <div class="bg-white">
     <h1 class="text-3xl font-bold text-red-800 mb-6 text-center">📻 Radio Drame</h1>
     
     <!-- Contrôles -->
@@ -26,13 +26,14 @@
     </audio>
     
     <!-- Morceau en cours -->
-    <div class="bg-red-50 rounded-lg p-6 mb-3">
+    <div class="bg-red-50 p-6 mb-3">
       <p class="text-sm text-red-600 font-medium mb-2">En cours de lecture</p>
       <h2 class="text-2xl font-bold text-red-900">
         <a href="#" data-audio-player-target="trackTitle" target="_blank" class="hover:text-red-600">
           -
         </a>
       </h2>
+      <p class="text-sm text-gray-500 mt-2" data-audio-player-target="trackCounter"></p>
     </div>
     
   </div>

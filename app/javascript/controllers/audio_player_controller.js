@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["audio", "trackTitle", "playlist"]
+  static targets = ["audio", "trackTitle", "playlist", "trackCounter"]
   static values = { songs: Array }
   
   connect() {
@@ -25,6 +25,10 @@ export default class extends Controller {
       this.playlistTarget.querySelectorAll('li').forEach((li, i) => {
         li.style.fontWeight = i === index ? 'bold' : 'normal'
       })
+    }
+
+    if (this.hasTrackCounterTarget) {
+      this.trackCounterTarget.textContent = `Morceau n°${index + 1}/${this.songsValue.length}`
     }
   }
   
