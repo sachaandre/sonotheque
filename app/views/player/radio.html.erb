@@ -3,16 +3,16 @@
      data-audio-player-songs-value="<%= @songs.to_json(only: [:id, :title], methods: [:audio_url, :album_web_link]) %>">
   
   <div class="bg-white rounded-lg shadow-lg p-8">
-    <h1 class="text-3xl font-bold text-purple-800 mb-6 text-center">📻 Radio Drame</h1>
+    <h1 class="text-3xl font-bold text-red-800 mb-6 text-center">📻 Radio Drame</h1>
     
     <!-- Contrôles -->
     <div class="flex gap-4 justify-center mb-3">
       <button data-action="click->audio-player#previous"
-              class="bg-purple-600 hover:bg-purple-700 text-white font-medium px-6 py-3 rounded-lg transition">
+              class="bg-red-600 hover:bg-red-700 text-white font-medium px-6 py-3 rounded-lg transition">
         ⏮ Morceau précédent
       </button>
       <button data-action="click->audio-player#next"
-              class="bg-purple-600 hover:bg-purple-700 text-white font-medium px-6 py-3 rounded-lg transition">
+              class="bg-red-600 hover:bg-red-700 text-white font-medium px-6 py-3 rounded-lg transition">
         Morceau suivant ⏭
       </button>
     </div>    
@@ -26,10 +26,10 @@
     </audio>
     
     <!-- Morceau en cours -->
-    <div class="bg-purple-50 rounded-lg p-6 mb-3">
-      <p class="text-sm text-purple-600 font-medium mb-2">En cours de lecture</p>
-      <h2 class="text-2xl font-bold text-purple-900">
-        <a href="#" data-audio-player-target="trackTitle" target="_blank" class="hover:text-purple-600">
+    <div class="bg-red-50 rounded-lg p-6 mb-3">
+      <p class="text-sm text-red-600 font-medium mb-2">En cours de lecture</p>
+      <h2 class="text-2xl font-bold text-red-900">
+        <a href="#" data-audio-player-target="trackTitle" target="_blank" class="hover:text-red-600">
           -
         </a>
       </h2>
