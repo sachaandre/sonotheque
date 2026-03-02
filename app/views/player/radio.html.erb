@@ -3,10 +3,10 @@
      data-audio-player-songs-value="<%= @songs.to_json(only: [:id, :title], methods: [:audio_url, :album_web_link]) %>">
   
   <div class="bg-white">
-    <h1 class="text-3xl font-bold text-red-800 mb-6 text-center">📻 Radio Drame</h1>
+    <h1 class="text-3xl font-bold text-red-800 mb-6 text-left">📻 Radio Drame</h1>
     
     <!-- Contrôles -->
-    <div class="flex gap-4 justify-center mb-3">
+    <div class="flex gap-4 justify-start mb-3">
       <button data-action="click->audio-player#previous"
               class="bg-red-600 hover:bg-red-700 text-white font-medium px-6 py-3 transition">
         ⏮ Morceau précédent
