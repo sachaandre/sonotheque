@@ -6,20 +6,19 @@
   
   <%= form.hidden_field :_destroy %>
   <%= form.hidden_field :song_id %>
-  
+  <%= form.hidden_field :track_number %>
+
   <div class="flex items-center gap-4 p-4 border border-gray-200 rounded-lg cursor-move">
     
     <span class="text-gray-400">☰</span>
+
+    <span class="text-xs font-mono text-gray-400 w-6 text-right shrink-0" data-track-number-display>
+      <%= form.object.track_number %>
+    </span>
     
     <span class="font-medium text-purple-800 flex-1" data-song-title-display>
       <%= form.object.song&.title || "Nouvelle chanson" %>
     </span>
-    
-    <input type="number" 
-           name="<%= form.object_name %>[track_number]" 
-           value="<%= form.object.track_number %>" 
-           readonly 
-           class="w-16 px-2 py-1 bg-white border border-gray-300 rounded text-center">
     
     <button type="button" 
             data-action="click->nested-form#remove"

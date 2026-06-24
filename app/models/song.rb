@@ -13,7 +13,11 @@ class Song < ApplicationRecord
     end
 
     def album_web_link
-        notes
+        albums.first&.web_link
+    end
+
+    def album_name
+        albums.first&.name
     end
 
     private

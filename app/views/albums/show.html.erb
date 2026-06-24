@@ -1,54 +1,116 @@
-<p style="color: green"><%= notice %></p>
+<% content_for :title, @album.name %>
 
-<%= render @album %>
+<div class="max-w-3xl mx-auto space-y-6">
 
-<div class="mb-8">
-  <h3 class="text-lg font-semibold text-purple-800 mb-4">Chansons</h3>
-  <% if @album.songs.any? %>
-    <ol class="space-y-2 ml-4">
-      <% @album.album_songs.order(:track_number).each do |album_song| %>
-        <li class="text-gray-700">
-          <strong><%= album_song.track_number %>.</strong> <%= album_song.song.title %>
-        </li>
-      <% end %>
-    </ol>
-  <% else %>
-    <p class="text-gray-600">Aucune chanson dans cet album</p>
-  <% end %>
-</div>
+  <%# En-tête : Titre + actions %>
+  <div class="bg-white rounded-2xl shadow-lg p-8">
+    <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+      <div class="flex-1 min-w-0">
+        <p class="text-xs font-semibold uppercase tracking-widest text-purple-400 mb-1">Album</p>
+        <h1 class="text-3xl font-bold text-purple-900 leading-tight break-words"><%= @album.name %></h1>
+        <% if @album.year.present? %>
+          <p class="text-gray-500 mt-1"><%= @album.year %></p>
+        <% end %>
+      </div>
 
-<div class="bg-white rounded-lg shadow p-6 mb-6">
-  <h3 class="text-lg font-semibold text-purple-800 mb-4">Exporter le player</h3>
-  <button onclick="copyIframeCode('album', <%= @album.id %>)" 
-          class="bg-purple-600 hover:bg-purple-700 text-white font-medium px-6 py-3 rounded-lg transition">
-    📋 Copier le code iframe
-  </button>
-  <pre id="iframe-code-album" style="background: #f5f5f5; padding: 10px; margin-top: 10px; display: none; border-radius: 0.5rem;"></pre>
-</div>
+      <div class="flex flex-wrap gap-2 shrink-0">
+        <%= link_to edit_album_path(@album),
+              class: "inline-flex items-center gap-2 bg-purple-100 hover:bg-purple-200 text-purple-700 font-medium px-4 py-2 rounded-lg transition text-sm" do %>
+          ✏️ Modifier
+        <% end %>
 
-<div class="flex gap-4">
-  <%= link_to "✏️ Éditer", edit_album_path(@album), class: "bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-lg transition" %>
-  <%= link_to "← Retour", albums_path, class: "bg-gray-600 hover:bg-gray-700 text-white font-medium px-6 py-3 rounded-lg transition" %>
-  <%= button_to "🗑️ Supprimer", @album, method: :delete, data: { confirm: "Êtes-vous sûr ?" }, class: "bg-red-600 hover:bg-red-700 text-white font-medium px-6 py-3 rounded-lg transition" %>
+        <%= button_to @album,
+              method: :delete,
+              data: { turbo_confirm: "Supprimer cet album définitivement ?" },
+              class: "inline-flex items-center gap-2 bg-red-50 hover:bg-red-100 text-red-600 font-medium px-4 py-2 rounded-lg transition text-sm" do %>
+          🗑 Supprimer
+        <% end %>
+      </div>
+    </div>
+
+    <% if @album.description.present? %>
+      <p class="mt-4 text-gray-600 text-sm leading-relaxed border-t border-gray-100 pt-4">
+        <%= @album.description %>
+      </p>
+    <% end %>
+
+    <% if @album.web_link.present? %>
+      <div class="mt-3">
+        <%= link_to "🔗 Voir sur drame.org", @album.web_link, target: "_blank",
+      class: "inline-flex items-center gap-1 text-purple-500 hover:text-purple-700 text-sm font-medium transition" %>
+      </div>
+    <% end %>
+  </div>
+
+  <%# Player de l'album %>
+  <div class="bg-white rounded-2xl shadow-lg p-8">
+    <p class="text-xs font-semibold uppercase tracking-widest text-purple-400 mb-4">Écouter l'album</p>
+    <%= link_to player_album_path(@album),
+          class: "inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white font-medium px-5 py-2.5 rounded-lg transition text-sm" do %>
+      ▶ Lancer le player
+    <% end %>
+  </div>
+
+  <%# Liste des pistes %>
+  <div class="bg-white rounded-2xl shadow-lg p-8">
+    <p class="text-xs font-semibold uppercase tracking-widest text-purple-400 mb-4">
+      Pistes
+      <span class="ml-2 bg-purple-100 text-purple-700 text-xs font-bold px-2 py-0.5 rounded-full">
+        <%= @album.songs.count %>
+      </span>
+    </p>
+
+    <% if @album.album_songs.any? %>
+      <ol class="space-y-2">
+        <% @album.album_songs.order(:track_number).each do |album_song| %>
+          <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-purple-50 transition group">
+            <span class="text-xs font-mono text-gray-400 w-6 text-right shrink-0">
+              <%= album_song.track_number %>
+            </span>
+            <span class="flex-1 font-medium text-purple-900 text-sm">
+              <%= link_to album_song.song.title, album_song.song,
+                    class: "hover:text-purple-600 transition" %>
+            </span>
+          </li>
+        <% end %>
+      </ol>
+    <% else %>
+      <p class="text-gray-400 text-sm italic">Aucune piste dans cet album.</p>
+    <% end %>
+  </div>
+
+  <%# Export iframe %>
+  <div class="bg-white rounded-2xl shadow-lg p-8">
+    <p class="text-xs font-semibold uppercase tracking-widest text-purple-400 mb-4">Exporter le player</p>
+    <button onclick="copyIframeCode()"
+            class="inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white font-medium px-5 py-2.5 rounded-lg transition text-sm">
+      📋 Copier le code iframe
+    </button>
+    <pre id="iframe-code"
+         class="mt-4 bg-gray-50 border border-gray-200 text-gray-700 text-xs font-mono rounded-xl p-4 whitespace-pre-wrap hidden break-all"></pre>
+  </div>
+
+  <%# Navigation %>
+  <div class="pb-4">
+    <%= link_to albums_path,
+          class: "inline-flex items-center gap-2 text-purple-600 hover:text-purple-800 font-medium text-sm transition" do %>
+      ← Retour aux albums
+    <% end %>
+  </div>
+
 </div>
 
 <script>
-function copyIframeCode(type, id) {
-  const baseUrl = '<%= request.base_url %>';
-  let iframeCode;
-  
-  if (type === 'album') {
-    iframeCode = `<iframe src="${baseUrl}/embed/album/${id}" width="100%" height="400" frameborder="0"></iframe>`;
-  } else {
-    iframeCode = `<iframe src="${baseUrl}/embed/radio" width="100%" height="400" frameborder="0"></iframe>`;
-  }
-  
-  navigator.clipboard.writeText(iframeCode);
-  
-  const codeBlock = document.getElementById(`iframe-code-${type}`);
-  codeBlock.textContent = iframeCode;
-  codeBlock.style.display = 'block';
-  
-  alert('Code iframe copié dans le presse-papier !');
+function copyIframeCode() {
+  const baseUrl = 'https://sonotheque.drame.org';
+  const albumId = '<%= @album.id %>';
+  const albumName = '<%= @album.name %>';
+  const iframeCode = `<iframe src="${baseUrl}/embed/album/${albumId}" title="Player audio de l'album ${albumName}" width="100%" height="400" frameborder="0"></iframe>`;
+
+  navigator.clipboard.writeText(iframeCode).then(() => {
+    const codeBlock = document.getElementById('iframe-code');
+    codeBlock.textContent = iframeCode;
+    codeBlock.classList.remove('hidden');
+  });
 }
 </script>

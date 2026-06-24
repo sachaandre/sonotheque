@@ -24,6 +24,10 @@ Rails.application.configure do
   config.assets.compile = true
   config.assets.precompile += %w( application.css )
 
+
+  config.assets.enabled = true  
+  config.assets.paths << "#{Rails.root}/app/assets/fonts"  
+
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 

@@ -1,10 +1,104 @@
-<p style="color: green"><%= notice %></p>
+<% content_for :title, @song.title %>
 
-<%= render @song %>
+<div class="max-w-3xl mx-auto space-y-6">
 
-<div>
-  <%= link_to "Edit this song", edit_song_path(@song) %> |
-  <%= link_to "Back to songs", songs_path %>
+  <%# En-tête : Titre + actions %>
+  <div class="bg-white rounded-2xl shadow-lg p-8">
+    <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+      <div class="flex-1 min-w-0">
+        <p class="text-xs font-semibold uppercase tracking-widest text-purple-400 mb-1">Morceau</p>
+        <h1 class="text-3xl font-bold text-purple-900 leading-tight break-words"><%= @song.title %></h1>
+        <% if @song.year.present? %>
+          <p class="mt-2 text-gray-400 text-sm font-medium"><%= @song.year %></p>
+        <% end %>
+      </div>
+      <div class="flex flex-wrap gap-2 shrink-0">
+        <%= link_to edit_song_path(@song),
+              class: "inline-flex items-center gap-1.5 bg-purple-100 hover:bg-purple-200 text-purple-800 text-sm font-medium px-4 py-2 rounded-lg transition" do %>
+          ✏️ Éditer
+        <% end %>
+        <%= button_to @song, method: :delete,
+              data: { turbo_confirm: "Supprimer ce morceau définitivement ?" },
+              class: "inline-flex items-center gap-1.5 bg-red-100 hover:bg-red-200 text-red-700 text-sm font-medium px-4 py-2 rounded-lg transition" do %>
+          🗑 Supprimer
+        <% end %>
+      </div>
+    </div>
+  </div>
 
-  <%= button_to "Destroy this song", @song, method: :delete %>
+  <%# Player audio %>
+  <div class="bg-white rounded-2xl shadow-lg p-8">
+    <p class="text-xs font-semibold uppercase tracking-widest text-purple-400 mb-4">Écouter</p>
+    <% if @song.audio_file.attached? %>
+      <audio controls class="w-full rounded-lg">
+        <source src="<%= url_for(@song.audio_file) %>" type="audio/mpeg">
+        Votre navigateur ne supporte pas la lecture audio.
+      </audio>
+    <% else %>
+      <p class="text-gray-400 italic">Aucun fichier audio attaché.</p>
+    <% end %>
+  </div>
+
+  <%# Métadonnées %>
+  <div class="bg-white rounded-2xl shadow-lg p-8">
+    <p class="text-xs font-semibold uppercase tracking-widest text-purple-400 mb-6">Informations</p>
+    <dl class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+      <% if @song.duration_seconds.present? %>
+        <div>
+          <dt class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Durée</dt>
+          <dd class="text-gray-800 font-medium">
+            <% minutes = @song.duration_seconds / 60 %>
+            <% seconds = @song.duration_seconds % 60 %>
+            <%= "#{minutes}min #{seconds.to_s.rjust(2, '0')}s" %>
+          </dd>
+        </div>
+      <% end %>
+
+      <% if @song.year.present? %>
+        <div>
+          <dt class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Année</dt>
+          <dd class="text-gray-800 font-medium"><%= @song.year %></dd>
+        </div>
+      <% end %>
+
+      <div class="sm:col-span-2">
+        <dt class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Fichier</dt>
+        <dd class="text-gray-600 font-mono text-sm break-all"><%= @song.audio_file.attached? ? @song.audio_file.filename : "—" %></dd>
+      </div>
+
+    </dl>
+  </div>
+
+  <%# Albums associés %>
+  <% if @song.albums.any? %>
+    <div class="bg-white rounded-2xl shadow-lg p-8">
+      <p class="text-xs font-semibold uppercase tracking-widest text-purple-400 mb-4">
+        Présent dans <%= pluralize(@song.albums.count, "album") %>
+      </p>
+      <ul class="space-y-2">
+        <% @song.albums.each do |album| %>
+          <li>
+            <%= link_to album, class: "flex items-center gap-3 p-3 rounded-xl hover:bg-purple-50 transition group" do %>
+              <span class="w-8 h-8 flex items-center justify-center bg-purple-100 group-hover:bg-purple-200 rounded-lg text-purple-700 text-sm font-bold transition">💿</span>
+              <div>
+                <p class="font-semibold text-purple-900 group-hover:text-purple-700 transition"><%= album.name %></p>
+                <% if album.year.present? %>
+                  <p class="text-xs text-gray-400"><%= album.year %></p>
+                <% end %>
+              </div>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%# Navigation %>
+  <div class="pb-4">
+    <%= link_to songs_path, class: "inline-flex items-center gap-2 text-purple-600 hover:text-purple-800 font-medium text-sm transition" do %>
+      ← Retour à la liste des morceaux
+    <% end %>
+  </div>
+
 </div>

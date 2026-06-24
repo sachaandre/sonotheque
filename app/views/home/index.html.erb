@@ -1,0 +1,55 @@
+<div class="max-w-5xl mx-auto">
+
+  <%# Titre & sous-titre %>
+  <div class="text-center mb-12">
+    <h1 class="text-4xl font-bold text-purple-900 mb-3">Sonothèque Drame</h1>
+    <p class="text-gray-500 text-lg">Explorez, écoutez, organisez.</p>
+  </div>
+
+  <%# Cartes de navigation %>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-14">
+
+    <%= link_to songs_path, class: "group bg-white rounded-2xl shadow hover:shadow-xl transition p-8 flex flex-col items-center text-center border border-transparent hover:border-purple-300" do %>
+      <span class="text-5xl mb-4">🎵</span>
+      <h2 class="text-xl font-bold text-purple-800 mb-2 group-hover:text-purple-600">Pistes audio</h2>
+      <p class="text-gray-500 text-sm">Parcourez et écoutez l'ensemble des MP3 disponibles.</p>
+    <% end %>
+
+    <%= link_to albums_path, class: "group bg-white rounded-2xl shadow hover:shadow-xl transition p-8 flex flex-col items-center text-center border border-transparent hover:border-purple-300" do %>
+      <span class="text-5xl mb-4">💿</span>
+      <h2 class="text-xl font-bold text-purple-800 mb-2 group-hover:text-purple-600">Albums</h2>
+      <p class="text-gray-500 text-sm">Consultez les albums constitués à partir de la collection.</p>
+    <% end %>
+
+    <%= link_to player_radio_path, class: "group bg-white rounded-2xl shadow hover:shadow-xl transition p-8 flex flex-col items-center text-center border border-transparent hover:border-purple-300" do %>
+      <span class="text-5xl mb-4">📻</span>
+      <h2 class="text-xl font-bold text-purple-800 mb-2 group-hover:text-purple-600">Radio</h2>
+      <p class="text-gray-500 text-sm">Écoutez toute la collection en lecture aléatoire, sans interruption.</p>
+    <% end %>
+
+  </div>
+
+  <%# Cartes de statistiques (non cliquables) %>
+  <div class="border-t border-purple-100 pt-10">
+    <h2 class="text-sm font-semibold text-purple-400 uppercase tracking-widest text-center mb-6">En chiffres</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+      <div class="bg-white rounded-xl border border-purple-100 shadow-sm p-6 text-center">
+        <p class="text-4xl font-bold text-purple-700 mb-1"><%= @songs_count %></p>
+        <p class="text-gray-500 text-sm">MP3 sur le serveur</p>
+      </div>
+
+      <div class="bg-white rounded-xl border border-purple-100 shadow-sm p-6 text-center">
+        <p class="text-4xl font-bold text-purple-700 mb-1"><%= @albums_count %></p>
+        <p class="text-gray-500 text-sm">Albums enregistrés</p>
+      </div>
+
+      <div class="bg-white rounded-xl border border-purple-100 shadow-sm p-6 text-center">
+        <p class="text-4xl font-bold text-purple-700 mb-1"><%= @albums_linked %></p>
+        <p class="text-gray-500 text-sm">Albums reliés à drame.org</p>
+      </div>
+
+    </div>
+  </div>
+
+</div>

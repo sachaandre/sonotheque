@@ -59,19 +59,19 @@ class SongsController < ApplicationController
     end
   end
 
-  def search
-  query = params[:q].to_s.strip
+    def search
+    query = params[:q].to_s.strip
   
     if query.present?
-      @songs = Song.where("title ILIKE ?", "%#{query}%")
-                  .order(:title)
-                  .limit(20)
+      @songs = Song.where("title ILIKE :q OR filename ILIKE :q", q: "%#{query}%")
+                   .order(:title)
     else
       @songs = Song.order(:title).limit(20)
     end
   
-  render json: @songs.as_json(only: [:id, :title])
-end
+    render json: @songs.as_json(only: [:id, :title])
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

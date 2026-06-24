@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   get 'embed/album/:id', to: 'player#album_embed', as: 'embed_album'
   get 'embed/radio', to: 'player#radio_embed', as: 'embed_radio'
 
-  root "songs#index"
+  root "home#index"
   get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'
   get 'logout', to: 'sessions#destroy'

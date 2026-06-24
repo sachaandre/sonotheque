@@ -4,6 +4,10 @@ class AlbumsController < ApplicationController
   # GET /albums or /albums.json
   def index
     @albums = Album.all
+    @albums = @albums.where("name ILIKE ?", "%#{params[:q]}%") if params[:q].present?
+    @albums = @albums.where("year >= ?", params[:year_from]) if params[:year_from].present?
+    @albums = @albums.where("year <= ?", params[:year_to]) if params[:year_to].present?
+    @albums = @albums.order(year: :desc)
   end
 
   # GET /albums/1 or /albums/1.json

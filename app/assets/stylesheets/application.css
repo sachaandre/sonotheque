@@ -10,8 +10,21 @@
  */
 /* Styles de base pour tous les navigateurs */
 
+@font-face {
+  font-family: 'Syne';
+  src: url("/assets/fonts/Syne-Regular.ttf") format("truetype");
+  font-weight: regular;
+}
+
+@font-face {
+  font-family: 'Syne';
+  src: url("/assets/fonts/Syne-Bold.ttf") format("truetype");
+  font-weight: bold;
+}
+
+
 * {
-  font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+  font-family: 'Syne', Helvetica Neue,Helvetica,Arial,sans-serif;
 }
 
 audio {
