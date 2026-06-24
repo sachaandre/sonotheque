@@ -20,6 +20,10 @@ class Song < ApplicationRecord
         albums.first&.name
     end
 
+    def album_author
+        albums.first&.author
+    end
+
     private
     def extract_duration_if_needed
         

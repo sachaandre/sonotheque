@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["audio", "trackTitle", "albumTitle", "playlist", "trackCounter"]
+  static targets = ["audio", "trackTitle", "albumTitle", "albumAuthor", "playlist", "trackCounter"]
   static values = { songs: Array, shuffle: Boolean }
 
   connect() {
@@ -29,7 +29,6 @@ export default class extends Controller {
 
     this.audioTarget.src = song.audio_url
     this.trackTitleTarget.textContent = song.title
-    this.trackTitleTarget.href = '#'
 
     if (this.hasAlbumTitleTarget) {
       if (song.album_name) {
@@ -39,6 +38,10 @@ export default class extends Controller {
         this.albumTitleTarget.textContent = 'Album : non renseigné'
         this.albumTitleTarget.href = '#'
       }
+    }
+
+    if (this.hasAlbumAuthorTarget) {
+      this.albumAuthorTarget.textContent = song.album_author ? song.album_author : 'Artiste(s) non renseigné(s)'
     }
 
     this.audioTarget.load()

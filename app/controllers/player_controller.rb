@@ -30,7 +30,7 @@ class PlayerController < ApplicationController
 
   def radio_songs_json
     cache_key = [
-      "radio_songs_v1",
+      "radio_songs_v2",
       Song.count,
       Song.maximum(:updated_at),
       Album.maximum(:updated_at),
@@ -39,7 +39,7 @@ class PlayerController < ApplicationController
     Rails.cache.fetch(cache_key) do
       Song.with_attached_audio_file
           .includes(:albums)
-          .to_json(only: [:id, :title], methods: [:audio_url, :album_web_link, :album_name])
+          .to_json(only: [:id, :title], methods: [:audio_url, :album_web_link, :album_name, :album_author])
     end
   end
 

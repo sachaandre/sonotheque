@@ -38,11 +38,19 @@
       <h3 class="text-lg font-semibold text-red-800 mb-4">Pistes</h3>
       <ol class="space-y-2" data-audio-player-target="playlist">
         <% @songs.each_with_index do |song, index| %>
-          <li data-action="click->audio-player#playSong" 
-              data-index="<%= index %>"
-              class="p-3 hover:bg-red-50 rounded cursor-pointer transition">
-            <span class="text-red-600 font-medium"><%= index + 1 %>.</span>
-            <%= song.title %>
+          <li class="flex items-center justify-between p-3 hover:bg-red-50 rounded transition">
+            <span data-action="click->audio-player#playSong"
+                  data-index="<%= index %>"
+                  class="flex-1 cursor-pointer">
+              <span class="text-red-600 font-medium"><%= index + 1 %>.</span>
+              <%= song.title %>
+            </span>
+            <% if song.audio_file.attached? %>
+              <%= link_to "⬇ Télécharger",
+                    rails_blob_path(song.audio_file, disposition: "attachment"),
+                    data: { turbo: false },
+                    class: "ml-3 shrink-0 text-sm text-red-600 hover:text-red-800 font-medium" %>
+            <% end %>
           </li>
         <% end %>
       </ol>
